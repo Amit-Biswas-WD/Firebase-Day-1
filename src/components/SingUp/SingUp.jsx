@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
+
 const SingUp = () => {
-    const handleSignUp = (event) => {
-        event.preventDefault()
-        const name = event.target.name.value;
-        const photo = event.target.photo.value;
-        const email = event.target.email.value;
-        const password = event.target.password.value;
-        console.log(name, photo, email, password);
-    }
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const photo = event.target.photo.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    console.log(name, photo, email, password);
+  };
   return (
     <div className="hero bg-gray-500 min-h-screen">
       <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
@@ -67,6 +69,13 @@ const SingUp = () => {
           <div className="form-control mt-6">
             <button className="btn btn-primary text-white">Login</button>
           </div>
+          <p className="text-end">
+            Go to
+            <Link className="text-green-500 mx-2" to={`/login`}>
+              Login
+            </Link>
+            Page.
+          </p>
         </form>
       </div>
     </div>
