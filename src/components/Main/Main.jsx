@@ -3,7 +3,7 @@ import Header from "../Header/Header"
 
 const Main = () => {
   return (
-    <div>
+    <div className="bg-gray-500 py-8">
         <Header/>
         <Outlet/>
     </div>
