@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Main/Main";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-  const { createLogin } = useContext(AuthContext);
+  const { createLogin, createGoogleProvider, createGithubProvider } =
+    useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -26,6 +27,26 @@ const Login = () => {
       .catch((error) => {
         console.log("Error", error);
         setErrorMessage(error.message);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    createGoogleProvider()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  };
+
+  const handleGithubLogin = () => {
+    createGithubProvider()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
       });
   };
 
@@ -81,6 +102,20 @@ const Login = () => {
         </form>
         <div>
           {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+        </div>
+        <div className="flex justify-around px-14 py-4 bg-gray-500">
+          <div
+            onClick={handleGoogleLogin}
+            className="flex gap-2 items-center btn btn-accent"
+          >
+            Google <FaGoogle />
+          </div>
+          <div
+            onClick={handleGithubLogin}
+            className="flex gap-2 items-center btn btn-accent"
+          >
+            Github <FaGithub />
+          </div>
         </div>
       </div>
     </div>
