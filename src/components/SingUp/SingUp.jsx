@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Main/Main";
 
 const SingUp = () => {
-  const { createGoogleProvider } = useContext(AuthContext);
+  const { createGoogleProvider, createGithubProvider } =
+    useContext(AuthContext);
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -17,6 +18,16 @@ const SingUp = () => {
 
   const handleGoogleLogin = () => {
     createGoogleProvider()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  };
+
+  const handleGithubLogin = () => {
+    createGithubProvider()
       .then((result) => {
         console.log(result.user);
       })
@@ -100,7 +111,10 @@ const SingUp = () => {
           >
             Google <FaGoogle />
           </div>
-          <div className="flex gap-2 items-center btn btn-accent">
+          <div
+            onClick={handleGithubLogin}
+            className="flex gap-2 items-center btn btn-accent"
+          >
             Github <FaGithub />
           </div>
         </div>
