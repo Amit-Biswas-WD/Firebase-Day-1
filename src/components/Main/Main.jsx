@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { Outlet } from "react-router-dom";
 import {
+  createUserWithEmailAndPassword,
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
@@ -21,9 +22,14 @@ const Main = () => {
     return signInWithPopup(auth, githubProvider);
   };
 
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
   const totalValue = {
+    createUser,
     createGoogleProvider,
-    createGithubProvider
+    createGithubProvider,
   };
 
   return (

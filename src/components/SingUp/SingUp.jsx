@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Main/Main";
 
 const SingUp = () => {
-  const { createGoogleProvider, createGithubProvider } =
+  const { createUser, createGoogleProvider, createGithubProvider } =
     useContext(AuthContext);
 
   const handleSignUp = (event) => {
@@ -14,6 +14,14 @@ const SingUp = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(name, photo, email, password);
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
   };
 
   const handleGoogleLogin = () => {
