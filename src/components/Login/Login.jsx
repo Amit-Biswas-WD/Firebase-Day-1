@@ -1,9 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Main/Main";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const { createLogin } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -11,12 +14,18 @@ const Login = () => {
     const password = event.target.password.value;
     console.log(email, password);
 
+    if (password.length < 6) {
+      setErrorMessage("Password should be 6 characters or longer");
+      return;
+    }
+
     createLogin(email, password)
       .then((result) => {
         console.log(result.user);
       })
       .catch((error) => {
         console.log("Error", error);
+        setErrorMessage(error.message);
       });
   };
 
@@ -36,17 +45,23 @@ const Login = () => {
               required
             />
           </div>
-          <div className="form-control">
+          <div className="form-control relative">
             <label className="label">
               <span className="label-text text-white">Password</span>
             </label>
             <input
-              type="password"
+              type={showPassword ? "password" : "text"}
               name="password"
               placeholder="password"
               className="input input-bordered bg-gray-500"
               required
             />
+            <p
+              onClick={() => setShowPassword(!showPassword)}
+              className="btn btn-xs absolute top-12 right-4"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </p>
             <label className="label">
               <a href="#" className="label-text-alt link link-hover text-white">
                 Forgot password?
@@ -64,6 +79,9 @@ const Login = () => {
             Page.
           </p>
         </form>
+        <div>
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+        </div>
       </div>
     </div>
   );

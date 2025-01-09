@@ -1,11 +1,13 @@
-import { useContext } from "react";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useContext, useState } from "react";
+import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Main/Main";
 
 const SingUp = () => {
   const { createUser, createGoogleProvider, createGithubProvider } =
     useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -15,12 +17,18 @@ const SingUp = () => {
     const password = event.target.password.value;
     console.log(name, photo, email, password);
 
+    if (password.length < 6) {
+      setErrorMessage("Password should be 6 characters or longer");
+      return;
+    }
+
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
       })
       .catch((error) => {
         console.log("Error", error);
+        setErrorMessage(error.message);
       });
   };
 
@@ -84,22 +92,23 @@ const SingUp = () => {
               required
             />
           </div>
-          <div className="form-control">
+          <div className="form-control relative">
             <label className="label">
               <span className="label-text text-white">Password</span>
             </label>
             <input
-              type="password"
+              type={showPassword ? "password" : "text"}
               name="password"
               placeholder="password"
               className="input input-bordered bg-gray-500"
               required
             />
-            <label className="label">
-              <a href="#" className="label-text-alt link link-hover text-white">
-                Forgot password?
-              </a>
-            </label>
+            <p
+              onClick={() => setShowPassword(!showPassword)}
+              className="btn btn-xs top-12 right-2 absolute"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </p>
           </div>
           <div className="form-control mt-6">
             <button className="btn btn-primary text-white">Sign Up</button>
@@ -112,6 +121,11 @@ const SingUp = () => {
             Page.
           </p>
         </form>
+        <div>
+          {
+            errorMessage && <p className="text-red">{errorMessage}</p>
+          }
+        </div>
         <div className="flex justify-around px-14 py-4 bg-gray-500">
           <div
             onClick={handleGoogleLogin}
