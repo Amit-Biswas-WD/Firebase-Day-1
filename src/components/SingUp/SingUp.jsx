@@ -22,6 +22,15 @@ const SingUp = () => {
       return;
     }
 
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/;
+
+    if (!passwordRegex.test(password)) {
+      setErrorMessage(
+        "At Least one UpperCase, one lowerCase, one number, one spacial character"
+      );
+      return;
+    }
+
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
@@ -121,11 +130,7 @@ const SingUp = () => {
             Page.
           </p>
         </form>
-        <div>
-          {
-            errorMessage && <p className="text-red">{errorMessage}</p>
-          }
-        </div>
+        <div>{errorMessage && <p className="text-red">{errorMessage}</p>}</div>
         <div className="flex justify-around px-14 py-4 bg-gray-500">
           <div
             onClick={handleGoogleLogin}
