@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Main/Main";
 
 const SingUp = () => {
+  const { createGoogleProvider } = useContext(AuthContext);
+
   const handleSignUp = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
@@ -9,6 +14,17 @@ const SingUp = () => {
     const password = event.target.password.value;
     console.log(name, photo, email, password);
   };
+
+  const handleGoogleLogin = () => {
+    createGoogleProvider()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  };
+
   return (
     <div className="hero bg-gray-500 min-h-screen">
       <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
@@ -67,7 +83,7 @@ const SingUp = () => {
             </label>
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary text-white">Login</button>
+            <button className="btn btn-primary text-white">Sign Up</button>
           </div>
           <p className="text-end">
             Go to
@@ -77,6 +93,17 @@ const SingUp = () => {
             Page.
           </p>
         </form>
+        <div className="flex justify-around px-14 py-4 bg-gray-500">
+          <div
+            onClick={handleGoogleLogin}
+            className="flex gap-2 items-center btn btn-accent"
+          >
+            Google <FaGoogle />
+          </div>
+          <div className="flex gap-2 items-center btn btn-accent">
+            Github <FaGithub />
+          </div>
+        </div>
       </div>
     </div>
   );

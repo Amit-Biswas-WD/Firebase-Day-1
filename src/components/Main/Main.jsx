@@ -1,13 +1,27 @@
-import { Outlet } from "react-router-dom"
-import Header from "../Header/Header"
+import { createContext } from "react";
+import { Outlet } from "react-router-dom";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from './../Firebase/firebase.init';
+
+
+export const AuthContext = createContext(null);
 
 const Main = () => {
-  return (
-    <div className="bg-gray-500 py-8">
-        <Header/>
-        <Outlet/>
-    </div>
-  )
-}
+  const googleProvider = new GoogleAuthProvider()
 
-export default Main
+  const createGoogleProvider = () => {
+    return signInWithPopup(auth, googleProvider)
+  }
+
+  const totalValue = {
+    createGoogleProvider
+  };
+
+  return (
+    <AuthContext.Provider value={totalValue}>
+      <Outlet />
+    </AuthContext.Provider>
+  );
+};
+
+export default Main;
