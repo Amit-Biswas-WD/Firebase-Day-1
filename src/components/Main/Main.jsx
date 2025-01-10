@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   GithubAuthProvider,
@@ -9,6 +8,7 @@ import {
 } from "firebase/auth";
 import auth from "./../Firebase/firebase.init";
 import { signInWithEmailAndPassword } from "firebase/auth/cordova";
+import Header from "../Header/Header";
 
 export const AuthContext = createContext(null);
 
@@ -53,7 +53,7 @@ const Main = () => {
 
   return (
     <AuthContext.Provider value={totalValue}>
-      <Outlet />
+     <Header/>
     </AuthContext.Provider>
   );
 };

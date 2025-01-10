@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../Main/Main";
 
 const Header = () => {
@@ -17,7 +17,9 @@ const Header = () => {
     </NavLink>,
   ];
   return (
-    <div className="navbar bg-base-100">
+    <div>
+      <Outlet/>
+      <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -53,6 +55,7 @@ const Header = () => {
       <div className="navbar-end">
         <a className="btn">{user && user.email}</a>
       </div>
+    </div>
     </div>
   );
 };

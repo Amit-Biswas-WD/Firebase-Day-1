@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "./../Main/Main";
 import Header from "./../Header/Header";
-import Login from "./../Login/Login";
-import SingUp from "./../SingUp/SingUp";
+import Login from './../Login/Login';
+import SingUp from './../SingUp/SingUp';
 
 export const router = createBrowserRouter([
   {
